@@ -11,14 +11,16 @@
         <div class="container">
             <body>
             <div class="login-wrapper">
-                <h3>글 작성</h3>
-                <br/>
+                <h3 class="mb-5">글 작성</h3>
+<!--                <br/>-->
                 <form method="post" action="/boards" th:object="${board}" enctype="multipart/form-data">
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="boardTitle" class="form-label">제목</label>
+<!--                        <div class="col-sm-2">-->
                         <input type="text" class="form-control" id="boardTitle" name="title" placeholder="제목을 입력하세요">
+<!--                        </div>-->
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-2 row">
                         <label for="boardAuthor" class="col-sm-1 col-form-label">작성자: </label>
                         <div class="col-sm-2">
                             <input type="text" readonly class="form-control-plaintext" id="boardAuthor" name="author"
@@ -28,7 +30,7 @@
                     <div>
                         <textarea class="summernote" id="summernote" name="content"></textarea>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <input class="form-control" type="file" id="formFile" name="files" multiple>
                     </div>
 

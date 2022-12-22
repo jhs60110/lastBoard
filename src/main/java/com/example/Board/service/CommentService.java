@@ -4,15 +4,16 @@ import com.example.Board.entity.Board;
 import com.example.Board.entity.Comment;
 import com.example.Board.entity.User;
 import com.example.Board.repository.CommentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 
-    @Autowired
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     public void saveComment(Comment comment, User authId, Board commentBoardId) {
         comment.setUser(authId);

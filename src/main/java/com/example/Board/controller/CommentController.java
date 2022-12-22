@@ -6,6 +6,7 @@ import com.example.Board.entity.User;
 import com.example.Board.service.BoardService;
 import com.example.Board.service.CommentService;
 import com.example.Board.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/comments")
 public class CommentController {
-    @Autowired
-    private BoardService boardService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private CommentService commentService;
+
+    private final BoardService boardService;
+
+    private final UserService userService;
+
+    private final CommentService commentService;
 
     @PostMapping("")
     public String saveComment(Comment comment, Authentication authentication, @RequestParam("boardId") Long boardId, HttpServletRequest request) {

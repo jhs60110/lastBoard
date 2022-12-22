@@ -2,6 +2,7 @@ package com.example.Board.controller;
 
 import com.example.Board.entity.BoardFile;
 import com.example.Board.service.BoardFileService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,14 @@ import java.net.URLEncoder;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/files")
 public class BoardFileController {
-    @Autowired
-    private BoardFileService boardFileService;
+
+    private final BoardFileService boardFileService;
 
     @GetMapping("/download/{boardFileId}")
-    public void download(HttpServletResponse response, @PathVariable Long boardFileId) throws IOException {
+    public void downloadFile(HttpServletResponse response, @PathVariable Long boardFileId) throws IOException {
 
         Optional<BoardFile> boardFile = boardFileService.selectBoardFile(boardFileId);
         String savedFileName = boardFile.get().getSavedFileName();

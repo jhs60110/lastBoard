@@ -2,6 +2,7 @@ package com.example.Board.controller;
 
 import com.example.Board.entity.User;
 import com.example.Board.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/account")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
 
     @GetMapping("/login")
     public String login(Model model) {
 
-        return "layout/login";
+        return "layout/authority/login";
     }
 
     @PostMapping("/login")
@@ -31,7 +33,7 @@ public class UserController {
     @GetMapping("/join")
     public String join() {
 
-        return "layout/join";
+        return "layout/authority/join";
     }
 
     @PostMapping("/join")

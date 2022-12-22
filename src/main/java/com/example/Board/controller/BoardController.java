@@ -6,6 +6,7 @@ import com.example.Board.entity.Board;
 import com.example.Board.entity.BoardFile;
 import com.example.Board.entity.Comment;
 import com.example.Board.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -17,20 +18,21 @@ import java.util.List;
 
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/boards")
 public class BoardController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private BoardService boardService;
-    @Autowired
-    private BoardFileService boardFileService;
-    @Autowired
-    private BoardFileService fileService;
-    @Autowired
-    private FileHandler fileHandler;
+
+    private final UserService userService;
+
+    private final CommentService commentService;
+
+    private final BoardService boardService;
+
+    private final BoardFileService boardFileService;
+
+    private final BoardFileService fileService;
+
+    private final FileHandler fileHandler;
 
     @PostMapping("")
     public String saveBoard(@RequestParam("title") String boardTitle, Authentication authentication, @RequestParam("content") String boardContent, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile, Board board) throws IOException {

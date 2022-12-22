@@ -22,10 +22,10 @@ public class Board {
     @JoinColumn(name = "user_id") //실제 DB ID
     private User user;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BoardFile> boardFile = new ArrayList<>();
 
     @Column(nullable = false, length = 30)

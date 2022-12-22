@@ -9,58 +9,51 @@
     <th:block layout:fragment="page_content" id="page_content">
         <div class="container">
             <div class="login-wrapper">
-                <h3>글 상세</h3>
-
-                <div>
+                <h3 class="mb-5">글 상세</h3>
+                <div class="mb-2">
                     <label>제목 :</label>
                     <a th:text="${boardInfo.title}" id="title"/>
                 </div>
-                <div>
+                <div class="mb-2">
                     <label>작성자 :</label>
                     <a th:text="${boardInfo.user.userName}" id="userName"/>
                 </div>
-                <br/>
-                <div class="mb-3">
-                    <textarea disabled class="form-control" id="summernote"
-                              th:utext="${boardInfo.getContent().toString()}"
-                              rows="3"></textarea>
+                <div class="mb-2">
+                    <pre th:utext="${boardInfo.content}"></pre>
                 </div>
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header">첨부파일</div>
-
-
+                    <div class="card-body">
                     <ul class="list-group" th:each="boardFile : ${boardFile}">
-                        <form method="get" th:action="@{/files/download/{id}(id = ${boardFile.id})}">
-                            <li th:id="'rid' + ${boardFile.id} " class="list-group-item d-flex justify-content-between">
+                            <li th:id="'rid' + ${boardFile.id} " class="list-group-item ">
                                 <input type="hidden" th:value="${boardFile.id}" th:name="boardFileId">
-                                <input type="submit" th:value="${boardFile.getOriginalFileName()}"></input>
+                                <a type="button" th:text="${boardFile.getOriginalFileName()}" th:href="@{/files/download/{id}(id = ${boardFile.id})}"></a>
                             </li>
-                        </form>
                     </ul>
-
-
                 </div>
+                </div>
+
             </div>
-            <hr>
-            <div class="card mb-2 mt-5">
+<!--            <hr>-->
+            <div class="card mb-2">
                 <div class="card-header bg-light">
                     <i class="fa fa-comment fa"></i> 댓글작성하기
                 </div>
                 <div class="card-body">
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group ">
                         <li class="list-group-item">
                             <form method="POST" action="/comments">
                                 <input type="hidden" name="boardId" class="form-control"
                                        th:value="${boardInfo.id}">
                                 <textarea class="form-control" id="exampleFormControlTextarea1"
                                           placeholder="댓글을 입력하세요" name="content" rows="1"></textarea>
-                                <button type="submit" class="btn btn-primary mt-3">등록</button>
+                                <button type="submit" class="btn btn-primary mt-2">등록</button>
                             </form>
                         </li>
                     </ul>
                 </div>
             </div>
-            <br/>
+<!--            <br/>-->
             <div class="card">
                 <div class="card-header">댓글</div>
                 <ul id="reply--box" class="list-group" th:each="comment : ${comment}">

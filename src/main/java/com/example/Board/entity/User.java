@@ -18,10 +18,10 @@ public class User {
     @Column(nullable = false, length = 10, unique = true)
     private String userId;
 
-    @OneToMany(mappedBy = "user") //어느 테이블에 매핑되는지
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) //어느 테이블에 매핑되는지
     private List<Board> board = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user") //어느 테이블에 매핑되는지
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) //어느 테이블에 매핑되는지
     private List<Comment> comment = new ArrayList<>();
 
     @Column(nullable = false, length = 10)
