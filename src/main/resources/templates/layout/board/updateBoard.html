@@ -9,21 +9,18 @@
     <th:block layout:fragment="page_content" id="page_content">
         <div class="container">
             <div class="login-wrapper">
-                <h3>글 수정</h3>
-                <br/>
+                <h3 class="mb-5">글 수정</h3>
                 <form method="POST" action="/boards/update" th:object="${boardInfo}">
                     <input type="hidden" name="_method" value="PUT"/>
-                    <div>
+                    <div class="mb-2">
                         <label>제목 :</label>
                         <input type="text" th:value="${boardInfo.title}" name="title"/>
                     </div>
-                    <div>
+                    <div class="mb-2">
                         <label>작성자 :</label>
                         <input class="" th:value="${userName}" id="userName" disabled/>
                     </div>
-                    <br/>
-                    <div>
-                        <label>내용 :</label>
+                    <div class="mb-2">
                         <textarea cols="50" rows="5" th:utext="${boardInfo.getContent().toString()}"
                                   id="summernote" name="content"></textarea><br/>
                     </div>
@@ -38,7 +35,7 @@
 
     </th:block>
     <th:block layout:fragment="script">
-        <script src="/js/updateBoard.js"></script>
+        <script th:inline="javascript" src="/js/updateBoard.js"></script>
     </th:block>
 </th:block>
 

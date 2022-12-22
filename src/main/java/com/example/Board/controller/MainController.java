@@ -18,9 +18,8 @@ public class MainController {
 
     private final BoardService boardService;
 
-    @GetMapping({"", "/search/list"})
+    @GetMapping({"", "/search/list", "/list"})
     public String boardMain(Model model, @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
-
         Page<Board> list = null;
 
         if(searchKeyword == null) {

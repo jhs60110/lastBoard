@@ -47,6 +47,12 @@
     </th:block>
 </th:block>
 <th:block layout:fragment="script">
-    <script src="/js/makeBoard.js"></script>
+
+    <script th:inline="javascript" src="/js/makeBoard.js">
+
+
+
+    </script>
+
 </th:block>
 </html>

@@ -94,6 +94,8 @@ public class BoardController {
 
     @DeleteMapping("")
     public String deleteBoard(@RequestParam("boardId") Long boardId) {
+        System.out.println("boardId");
+        System.out.println(boardId);
         boardService.deleteBoard(boardId);
 
         return "redirect:/";
