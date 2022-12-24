@@ -1,14 +1,17 @@
 package com.example.Board.controller;
 
+import com.example.Board.entity.Board;
 import com.example.Board.entity.BoardFile;
 import com.example.Board.service.BoardFileService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -38,5 +41,12 @@ public class BoardFileController {
         response.getOutputStream().write(fileByte);
         response.getOutputStream().flush();
         response.getOutputStream().close();
+    }
+
+    @DeleteMapping("")
+    public String deleteBoardFile(HttpServletRequest request ,@RequestParam("boardFileId") Long boardFileId) {
+        boardFileService.deleteBoardFile(boardFileId);
+
+        return "redirect:" + request.getHeader("Referer");
     }
 }

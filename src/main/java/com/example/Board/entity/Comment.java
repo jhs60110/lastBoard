@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class Comment {
+public class Comment extends BaseTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,14 +26,5 @@ public class Comment {
 
     @Column(nullable = false, length = 100)
     private String content;
-
-    @CreationTimestamp
-    private Date createdDate;
-
-    @UpdateTimestamp
-    private Date updatedDate;
-
-    @DateTimeFormat
-    private Date deletedDate;
 
 }

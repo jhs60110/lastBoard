@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class BoardFile {
+public class BoardFile extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +32,5 @@ public class BoardFile {
     private String savedFileName;
 
     private Long fileSize;
-
-    @CreationTimestamp
-    private Date createdDate;
 
 }

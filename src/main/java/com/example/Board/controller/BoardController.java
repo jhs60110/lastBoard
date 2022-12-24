@@ -67,19 +67,20 @@ public class BoardController {
 
     @GetMapping("/new")
     public String saveBoard(Model model, Authentication authentication) {
-        String userName = userService.findUserName(authentication);
-        model.addAttribute("userName", userName);
+//        String userName = userService.findUserName(authentication);
+//        model.addAttribute("userName", userName);
 
         return "layout/board/makeBoard";
     }
 
     @GetMapping("/update/{id}") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
     public String updateBoard(Model model, Authentication authentication, Board board) {
-        String userName = userService.findUserName(authentication);
+//        String userName = userService.findUserName(authentication);
         Board boardInfo = boardService.selectBoard(board);
-
-        model.addAttribute("userName", userName);
+//        List<BoardFile> boardFile = boardFileService.selectBoard(id);
+//        model.addAttribute("userName", userName);
         model.addAttribute("boardInfo", boardInfo);
+//        model.addAttribute("boardFile", boardFile);
 
         return "layout/board/updateBoard";
     }

@@ -12,47 +12,36 @@
             <body>
             <div class="login-wrapper">
                 <h3 class="mb-5">글 작성</h3>
-<!--                <br/>-->
-                <form method="post" action="/boards" th:object="${board}" enctype="multipart/form-data">
+                <form method="POST" action="/boards" th:object="${board}" enctype="multipart/form-data">
                     <div class="mb-2">
                         <label for="boardTitle" class="form-label">제목</label>
-<!--                        <div class="col-sm-2">-->
                         <input type="text" class="form-control" id="boardTitle" name="title" placeholder="제목을 입력하세요">
-<!--                        </div>-->
                     </div>
                     <div class="mb-2 row">
-                        <label for="boardAuthor" class="col-sm-1 col-form-label">작성자: </label>
+                        <label class="col-sm-1 col-form-label">작성자:</label>
                         <div class="col-sm-2">
-                            <input type="text" readonly class="form-control-plaintext" id="boardAuthor" name="author"
-                                   th:value="${userName}">
+                            <span type="text" readonly class="form-control-plaintext align-middle"
+                               sec:authentication="name" ></span>
                         </div>
                     </div>
-                    <div>
+                    <div class="mb-2">
                         <textarea class="summernote" id="summernote" name="content"></textarea>
                     </div>
                     <div class="mb-2">
                         <input class="form-control" type="file" id="formFile" name="files" multiple>
                     </div>
-
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-secondary" type="button" onclick="location.href='/'">목록</button>
                         <button type="submit" id="saveButton" class="btn btn-primary">등록</button>
                     </div>
                 </form>
-
             </div>
             </body>
         </div>
-
     </th:block>
 </th:block>
 <th:block layout:fragment="script">
-
     <script th:inline="javascript" src="/js/makeBoard.js">
-
-
-
     </script>
-
 </th:block>
 </html>

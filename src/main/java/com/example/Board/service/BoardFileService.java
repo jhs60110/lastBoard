@@ -31,6 +31,10 @@ public class BoardFileService {
             boardFileRepository.save(boardFile);
         }
     }
+    public void deleteBoardFile(Long id) {
+
+        boardFileRepository.deleteById(id);
+    }
 }
 
 

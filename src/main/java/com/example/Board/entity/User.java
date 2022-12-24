@@ -10,7 +10,7 @@ import java.util.*;
 @Entity  //jpa가 관리한다.
 @Setter
 @Getter
-public class User {
+public class User extends BaseTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,11 +32,5 @@ public class User {
 
     @Column(nullable = false, length = 10)
     private String role; //ROLE_USER, ROLE_ADMIN
-
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 
 }
