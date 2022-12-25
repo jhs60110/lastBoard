@@ -4,7 +4,6 @@ import com.example.Board.config.PrincipalDetails;
 import com.example.Board.entity.User;
 import com.example.Board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,12 +20,6 @@ public class UserService {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
         return userRepository.findByUserName(principalDetails.getUsername());
-    }
-
-    public String findUserName(Authentication authentication) {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-
-        return principalDetails.getUsername();
     }
 
     public void saveUser(User user) {

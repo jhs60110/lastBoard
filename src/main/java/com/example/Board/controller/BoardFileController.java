@@ -1,16 +1,11 @@
 package com.example.Board.controller;
 
-import com.example.Board.entity.Board;
 import com.example.Board.entity.BoardFile;
 import com.example.Board.service.BoardFileService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -28,7 +23,7 @@ public class BoardFileController {
     @GetMapping("/download/{boardFileId}")
     public void downloadFile(HttpServletResponse response, @PathVariable Long boardFileId) throws IOException {
 
-        Optional<BoardFile> boardFile = boardFileService.selectBoardFile(boardFileId);
+        Optional<BoardFile> boardFile = boardFileService.findBoardFile(boardFileId);
         String savedFileName = boardFile.get().getSavedFileName();
         String originalFileName = boardFile.get().getOriginalFileName();
         String path =savedFileName;

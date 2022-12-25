@@ -31,10 +31,10 @@
                     <div class="card mb-2">
                         <div class="card-header mb-2">첨부파일</div>
                         <div class="card-body d-inline-flex p-2 bd-highlight">
-                            <div class="list-group" th:each="boardFile : ${boardInfo.boardFile}">
-                                <div th:id="'rid' + ${boardFile.id} " class="me-2" >
-                                    <input type="hidden" th:value="${boardFile.id}" th:name="boardFileId" th:id="boardFileId">
-                                    <a  class="btn btn-danger" th:text="${boardFile.getOriginalFileName()}+'    X'"
+                            <div class="list-group" th:each="boardFiles : ${boardInfo.boardFiles}">
+                                <div th:id="'rid' + ${boardFiles.id} " class="me-2" >
+                                    <input type="hidden" th:value="${boardFiles.id}" th:name="boardFileId" th:id="boardFileId">
+                                    <a  class="btn btn-danger" th:text="${boardFiles.getOriginalFileName()}+'    X'"
                                             onclick="deleteBoardFile()"
                                     ></a>
 

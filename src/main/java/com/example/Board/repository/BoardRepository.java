@@ -16,4 +16,10 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     int updateViews(@Param("id") Long id);
 
     Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
+
+    @Query("SELECT DISTINCT b FROM Board b " +
+            "LEFT JOIN FETCH b.boardFiles " +
+            "LEFT JOIN FETCH b.comments " +
+            "WHERE b.id = :id" )
+    Board findWithRels( @Param("id") Long id);
 }

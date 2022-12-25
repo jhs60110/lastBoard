@@ -18,8 +18,8 @@
     <th:block layout:fragment="add-css"></th:block>
 
     <meta name="context-path" th:content="@{/}"/>
-    <title sec:authorize="hasAnyRole('ROLE_USER')" layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">사원</title>
-    <title sec:authorize="hasAnyRole('ROLE_ADMIN')" layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">경영진</title>
+    <title sec:authorize="hasAnyRole('ROLE_USER')" layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">일반유저</title>
+    <title sec:authorize="hasAnyRole('ROLE_ADMIN')" layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">관리자</title>
 
     <link rel="icon" type="image/png" th:href="@{/img/bigFace.jpg}" sizes="32x32"/>
 </head>

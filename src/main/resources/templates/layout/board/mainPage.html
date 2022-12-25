@@ -25,7 +25,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr class="table-secondary">
-                    <th class="text-center">#</th>
+                    <th class="text-center">ID</th>
                     <th class="text-center">제목</th>
                     <th class="text-center">작성자</th>
                     <th class="text-center">작성시간</th>
@@ -35,30 +35,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="board:${list}">
+                <tr th:each="boards:${page}">
+                    <td class="align-middle text-center" th:text="${boards.id}"></td>
                     <td class="align-middle text-center">
-                        <a  th:text="${board.id}" th:href="@{/boards/{id}(id = ${board.id})}"></a>
+                        <a th:text="${boards.title}" th:href="@{/boards/{id}(id = ${boards.id})}"></a>
                     </td>
                     <td class="align-middle text-center">
-                        <a  th:text="${board.title}" th:href="@{/boards/{id}(id = ${board.id})}"></a>
-                    </td>
-                    <td  class="align-middle text-center">
-                        <a th:text="${board.user.userName}" th:href="@{/boards/{id}(id = ${board.id})}"></a>
+                        <a th:text="${boards.user.userName}" th:href="@{/boards/{id}(id = ${boards.id})}"></a>
                     </td>
                     <td class="align-middle text-center">
-                        <a  th:text="${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')}"
-                            th:href="@{/boards/{id}(id = ${board.id})}"></a>
+                        <a th:text="${#temporals.format(boards.createdDate,'yyyy-MM-dd HH:mm')}"
+                           th:href="@{/boards/{id}(id = ${boards.id})}"></a>
                     </td>
                     <td class="align-middle text-center">
-                        <a  th:text="${#temporals.format(board.updatedDate,'yyyy-MM-dd HH:mm')}"
-                            th:href="@{/boards/{id}(id = ${board.id})}"></a>
+                        <a th:text="${#temporals.format(boards.updatedDate,'yyyy-MM-dd HH:mm')}"
+                           th:href="@{/boards/{id}(id = ${boards.id})}"></a>
                     </td>
                     <td class="align-middle text-center">
-                        <a  th:text="${board.getViews()}" th:href="@{/boards/{id}(id = ${board.id})}"></a>
+                        <a th:text="${boards.getViews()}" th:href="@{/boards/{id}(id = ${boards.id})}"></a>
                     </td>
                     <td>
                         <button type="button" class="btn btn-secondary center-block " sec:authorize="isAuthenticated()"
-                                th:onclick="'location.href=\''+ @{/boards/{id}(id = ${board.id})} + '\''">상세보기
+                                th:onclick="'location.href=\''+ @{/boards/{id}(id = ${boards.id})} + '\''">상세보기
                         </button>
                     </td>
                 </tr>
@@ -67,25 +65,18 @@
             <button type="button" class="btn btn-primary" sec:authorize="isAuthenticated()"
                     onclick="location.href='/boards/new'">글쓰기
             </button>
+
             <div class="pagination-wrapper text-center">
                 <ul class="pagination">
-<!--                    <li class="page-item disabled">-->
-<!--                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>-->
-<!--                    </li>-->
-
                     <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
                         <li class="page-item">
-                            <a th:if="${page != nowPage}" th:href="@{/list(page=${page-1})}"
+                            <a th:if="${page != nowPage}" th:href="@{/page(page=${page-1})}"
                                th:text="${page}"></a>
                         </li>
                         <li class="page-item">
-                            <a th:if="${page==nowPage}" th:text="${page}" ></a>
+                            <a th:if="${page==nowPage}" th:text="${page}"></a>
                         </li>
                     </th:block>
-
-<!--                    <li class="page-item">-->
-<!--                        <a class="page-link" href="#">Next</a>-->
-<!--                    </li>-->
                 </ul>
             </div>
         </div>

@@ -21,7 +21,8 @@
                         <label class="col-sm-1 col-form-label">작성자:</label>
                         <div class="col-sm-2">
                             <span type="text" readonly class="form-control-plaintext align-middle"
-                               sec:authentication="name" ></span>
+                               sec:authentication="name" name="userName"></span>
+                            <input  hidden name="user" th:value="${user.id}">
                         </div>
                     </div>
                     <div class="mb-2">

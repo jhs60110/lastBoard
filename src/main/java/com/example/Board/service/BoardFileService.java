@@ -15,12 +15,12 @@ public class BoardFileService {
 
     private final BoardFileRepository boardFileRepository;
 
-    public List<BoardFile> selectBoard(Long id) {
+//    public List<BoardFile> findBoard(Long id) {
+//
+//        return boardFileRepository.findByBoardId(id);
+//    }
 
-        return boardFileRepository.findByBoardId(id);
-    }
-
-    public Optional<BoardFile> selectBoardFile(Long id) {
+    public Optional<BoardFile> findBoardFile(Long id) {
 
         return boardFileRepository.findById(id);
     }

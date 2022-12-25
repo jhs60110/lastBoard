@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,10 +24,10 @@ public class Board extends BaseTime{
     private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comment> comment = new ArrayList<>();
+    private Set<Comment> comments ;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BoardFile> boardFile = new ArrayList<>();
+    private Set<BoardFile> boardFiles ;
 
     @Column(nullable = false, length = 30)
     private String title;

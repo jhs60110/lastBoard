@@ -7,7 +7,6 @@ import com.example.Board.entity.BoardFile;
 import com.example.Board.entity.Comment;
 import com.example.Board.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,9 +34,9 @@ public class BoardController {
     private final FileHandler fileHandler;
 
     @PostMapping("")
-    public String saveBoard(@RequestParam("title") String boardTitle, Authentication authentication, @RequestParam("content") String boardContent, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile, Board board) throws IOException {
-        User authId = userService.findUserId(authentication);
-        boardService.saveBoard(board, boardTitle, boardContent, authId);
+    public String saveBoard(@ModelAttribute Board board, Authentication authentication,@RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException {
+        User userId = userService.findUserId(authentication);
+        boardService.saveBoard(board, userId);
 
         if (boardFile != null) {
             fileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
@@ -46,57 +45,45 @@ public class BoardController {
         return "redirect:/";
     }
     @GetMapping("/{id}")
-    public String viewBoard(Model model, Authentication authentication, @PathVariable Long id) {
+    public String findBoard(Model model, Authentication authentication, @PathVariable Long id) {
         if (authentication != null) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             model.addAttribute("principalDetails", principalDetails);
             //viewBoard에서 userRole도 쓰고 있어서 한 번에 붙이는게 좋을것같았음
         }
 
-        Board boardInfo = boardService.selectBoard(id);
+        Board boardInfo = boardService.findWithRels(id);
         boardService.updateViews(boardInfo.getId());
-        List<Comment> comment = commentService.selectBoard(id);
-        List<BoardFile> boardFile = boardFileService.selectBoard(id);
-
         model.addAttribute("boardInfo", boardInfo);
-        model.addAttribute("comment", comment);
-        model.addAttribute("boardFile", boardFile);
 
         return "layout/board/viewBoard";
     }
 
     @GetMapping("/new")
     public String saveBoard(Model model, Authentication authentication) {
-//        String userName = userService.findUserName(authentication);
-//        model.addAttribute("userName", userName);
-
+        User user = userService.findUserId(authentication);
+        model.addAttribute("user", user);
         return "layout/board/makeBoard";
     }
 
     @GetMapping("/update/{id}") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
-    public String updateBoard(Model model, Authentication authentication, Board board) {
-//        String userName = userService.findUserName(authentication);
-        Board boardInfo = boardService.selectBoard(board);
-//        List<BoardFile> boardFile = boardFileService.selectBoard(id);
-//        model.addAttribute("userName", userName);
+    public String updateBoard(Model model, Board board) {
+        Board boardInfo = boardService.findBoard(board);
         model.addAttribute("boardInfo", boardInfo);
-//        model.addAttribute("boardFile", boardFile);
 
         return "layout/board/updateBoard";
     }
 
     @PutMapping("/update") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
-    public String updateBoard(Board board, Authentication authentication, @RequestParam("boardId") String boardId) {
-        User authId = userService.findUserId(authentication);
-        boardService.updateBoard(board, boardId, authId);
+    public String updateBoard(@ModelAttribute Board board, Authentication authentication, @RequestParam("boardId") String boardId) {
+        User userId = userService.findUserId(authentication);
+        boardService.updateBoard(board, boardId, userId);
 
         return "redirect:/";
     }
 
     @DeleteMapping("")
     public String deleteBoard(@RequestParam("boardId") Long boardId) {
-        System.out.println("boardId");
-        System.out.println(boardId);
         boardService.deleteBoard(boardId);
 
         return "redirect:/";

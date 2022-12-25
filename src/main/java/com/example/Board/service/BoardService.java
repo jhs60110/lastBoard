@@ -20,20 +20,18 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void saveBoard(Board board, String boardTitle, String boardContent, User authId) {
-        board.setTitle(boardTitle);
-        board.setContent(boardContent);
-        board.setUser(authId);
+    public void saveBoard(Board board, User userId) {
+        board.setUser(userId);
         boardRepository.save(board);
     }
 
-    public void updateBoard(Board board, String boardId, User authId) {
-        board.setUser(authId);
+    public void updateBoard(Board board, String boardId, User userId) {
+        board.setUser(userId);
         board.setId(Long.valueOf(boardId));
         boardRepository.save(board);
     }
 
-    public Board selectBoard(Board board) {
+    public Board findBoard(Board board) {
 
         return boardRepository.findById(board.getId()).get();
     }
@@ -43,11 +41,15 @@ public class BoardService {
         return this.boardRepository.updateViews(id);
     }
 
-    public Board selectBoard(Long id) {
+//    public Board selectBoard(Long id) {
+//
+//        return boardRepository.findById(id).get();
+//    }
+    public Board findWithRels(Long boardId) {
 
-        return boardRepository.findById(id).get();
+        return boardRepository.findWithRels(boardId);
     }
-    public Page<Board> searchBoardList(String SearchKeyword,Pageable pageable){
+    public Page<Board> findBoardList(String SearchKeyword,Pageable pageable){
 
         return boardRepository.findByTitleContaining(SearchKeyword, pageable);
     }
@@ -55,14 +57,17 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
 
-    public Board selectReferenceById(Long boardId) {
+    public Board findReferenceById(Long boardId) {
 
         return boardRepository.getReferenceById(boardId);
     }
 
-    public Page<Board> selectBoardList(Pageable pageable) {
+
+    public Page<Board> findBoardList(Pageable pageable) {
 
         return boardRepository.findAll(pageable);
     }
+
+
 
 }
