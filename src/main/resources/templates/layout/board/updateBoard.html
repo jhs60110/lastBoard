@@ -10,7 +10,7 @@
         <div class="container">
             <div class="login-wrapper">
                 <h3 class="mb-5">글 수정</h3>
-                <form method="POST" action="/boards/update" th:object="${boardInfo}">
+                <form method="POST" action="/boards/update" th:object="${boardInfo}" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PUT"/>
                     <div class="mb-2">
                         <label class="form-label">제목 :</label>
@@ -46,6 +46,7 @@
                     <div class="mb-2">
                         <input class="form-control" type="file" id="formFile" name="files" multiple>
                     </div>
+
                     <input type="text" th:value="${boardInfo.id}" name="boardId" hidden/>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-secondary" onclick="location.href='/'" type="button">목록</button>

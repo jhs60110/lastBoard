@@ -87,9 +87,6 @@
                 </div>
             </div>
 
-<!--            <form method="post" action="/boards">-->
-<!--                <input type="hidden" name="_method" value="DELETE"/>-->
-<!--                <input type="hidden" th:value="${boardInfo.id}" name="boardId"/>-->
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button class="btn btn-primary" sec:authorize="isAuthenticated()"
                             th:if="${principalDetails.getUser().getUserId() == boardInfo.user.userId}"
@@ -103,7 +100,7 @@
                         삭제
                     </button>
                 </div>
-<!--            </form>-->
+
         </div>
         </div>
         <button type="button" class="btn btn-secondary" onclick="location.href='/'">목록</button>

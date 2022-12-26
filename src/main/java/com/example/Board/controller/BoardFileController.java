@@ -22,20 +22,8 @@ public class BoardFileController {
 
     @GetMapping("/download/{boardFileId}")
     public void downloadFile(HttpServletResponse response, @PathVariable Long boardFileId) throws IOException {
+        boardFileService.downloadBoardFile(boardFileId, response);
 
-        Optional<BoardFile> boardFile = boardFileService.findBoardFile(boardFileId);
-        String savedFileName = boardFile.get().getSavedFileName();
-        String originalFileName = boardFile.get().getOriginalFileName();
-        String path =savedFileName;
-        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
-
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";");
-        response.setHeader("Content-Transfer-Encoding", "binary");
-
-        response.getOutputStream().write(fileByte);
-        response.getOutputStream().flush();
-        response.getOutputStream().close();
     }
 
     @DeleteMapping("")

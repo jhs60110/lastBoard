@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -23,27 +24,24 @@ public class BoardController {
 
     private final UserService userService;
 
-    private final CommentService commentService;
-
     private final BoardService boardService;
 
     private final BoardFileService boardFileService;
 
-    private final BoardFileService fileService;
-
     private final FileHandler fileHandler;
 
     @PostMapping("")
-    public String saveBoard(@ModelAttribute Board board, Authentication authentication,@RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException {
+    public String saveBoard(@ModelAttribute Board board, Authentication authentication, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException {
         User userId = userService.findUserId(authentication);
         boardService.saveBoard(board, userId);
 
         if (boardFile != null) {
-            fileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
+            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
         }
 
         return "redirect:/";
     }
+
     @GetMapping("/{id}")
     public String findBoard(Model model, Authentication authentication, @PathVariable Long id) {
         if (authentication != null) {
@@ -75,9 +73,14 @@ public class BoardController {
     }
 
     @PutMapping("/update") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
-    public String updateBoard(@ModelAttribute Board board, Authentication authentication, @RequestParam("boardId") String boardId) {
+    public String updateBoard(@ModelAttribute Board board, Authentication authentication, @RequestParam("boardId") String boardId, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException{
         User userId = userService.findUserId(authentication);
         boardService.updateBoard(board, boardId, userId);
+        if (boardFile != null) {
+            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board); //수정하면 보드가 하나 새로 생성되?
+        }
+
+
 
         return "redirect:/";
     }

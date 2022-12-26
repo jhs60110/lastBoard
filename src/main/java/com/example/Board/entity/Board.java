@@ -3,12 +3,6 @@ package com.example.Board.entity;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,10 +17,10 @@ public class Board extends BaseTime{
     @JoinColumn(name = "user_id") //실제 DB ID
     private User user;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private Set<Comment> comments ;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private Set<BoardFile> boardFiles ;
 
     @Column(nullable = false, length = 30)
