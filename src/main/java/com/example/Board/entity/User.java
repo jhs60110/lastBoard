@@ -16,10 +16,10 @@ public class User extends BaseTime{
     @Column(nullable = false, length = 10, unique = true)
     private String userId;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Board> board = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
 
     @Column(nullable = false, length = 10)

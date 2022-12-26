@@ -17,7 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/files")
 public class BoardFileController {
-
     private final BoardFileService boardFileService;
 
     @GetMapping("/download/{boardFileId}")

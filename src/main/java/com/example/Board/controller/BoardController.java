@@ -7,6 +7,7 @@ import com.example.Board.entity.BoardFile;
 import com.example.Board.entity.Comment;
 import com.example.Board.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,20 +21,17 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/boards")
+@Slf4j
 public class BoardController {
 
     private final UserService userService;
-
     private final BoardService boardService;
-
     private final BoardFileService boardFileService;
-
     private final FileHandler fileHandler;
 
     @PostMapping("")
-    public String saveBoard(@ModelAttribute Board board, Authentication authentication, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException {
-        User userId = userService.findUserId(authentication);
-        boardService.saveBoard(board, userId);
+    public String saveBoard(@ModelAttribute Board board, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException {
+        boardService.saveBoard(board);
 
         if (boardFile != null) {
             boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
@@ -64,7 +62,7 @@ public class BoardController {
         return "layout/board/makeBoard";
     }
 
-    @GetMapping("/update/{id}") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
+    @GetMapping("/update/{id}")
     public String updateBoard(Model model, Board board) {
         Board boardInfo = boardService.findBoard(board);
         model.addAttribute("boardInfo", boardInfo);
@@ -72,15 +70,13 @@ public class BoardController {
         return "layout/board/updateBoard";
     }
 
-    @PutMapping("/update") //TODO 수정은 html단에서 js로 수정칸을 열고 수정 화면을 삭제 한 후 url 주소를 ""로바꾸기
+    @PutMapping("/update")
     public String updateBoard(@ModelAttribute Board board, Authentication authentication, @RequestParam("boardId") String boardId, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException{
         User userId = userService.findUserId(authentication);
         boardService.updateBoard(board, boardId, userId);
         if (boardFile != null) {
-            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board); //수정하면 보드가 하나 새로 생성되?
+            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
         }
-
-
 
         return "redirect:/";
     }

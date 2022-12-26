@@ -3,6 +3,7 @@ package com.example.Board.service;
 import com.example.Board.entity.Board;
 import com.example.Board.entity.User;
 import com.example.Board.repository.BoardRepository;
+import com.example.Board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
 
-    public void saveBoard(Board board, User userId) {
-        board.setUser(userId);
+    public void saveBoard(Board board) {
         boardRepository.save(board);
     }
 
@@ -44,6 +45,7 @@ public class BoardService {
         return boardRepository.findByTitleContaining(SearchKeyword, pageable);
     }
     public void deleteBoard(Long boardId) {
+
         boardRepository.deleteById(boardId);
     }
 
@@ -51,7 +53,6 @@ public class BoardService {
 
         return boardRepository.getReferenceById(boardId);
     }
-
 
     public Page<Board> findBoardList(Pageable pageable) {
 

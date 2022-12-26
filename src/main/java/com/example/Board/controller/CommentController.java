@@ -18,9 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommentController {
 
     private final BoardService boardService;
-
     private final UserService userService;
-
     private final CommentService commentService;
 
     @PostMapping("")
