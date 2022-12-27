@@ -7,33 +7,31 @@ import com.example.Board.service.BoardService;
 import com.example.Board.service.CommentService;
 import com.example.Board.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/comments")
 public class CommentController {
 
-    private final BoardService boardService;
-    private final UserService userService;
     private final CommentService commentService;
 
     @PostMapping("")
-    public String saveComment(Comment comment, Authentication authentication, @RequestParam("boardId") Long boardId, HttpServletRequest request) {
-        User userId = userService.findUserId(authentication);
-        Board commentBoardId = boardService.findReferenceById(boardId);
-        commentService.saveComment(comment, userId, commentBoardId);
+    public String saveComment(@ModelAttribute Comment comment, HttpServletRequest request) {
+        commentService.saveComment(comment);
 
         return "redirect:" + request.getHeader("Referer");
     }
 
     @PutMapping("/{id}")
-    public String updateComment(Comment comment, Authentication authentication, HttpServletRequest request, @PathVariable Long id, @RequestParam("commentUserName") String userName, @RequestParam("boardId") Board boardId) {
-        User userId = userService.findUserId(authentication);
-        commentService.updateComment(comment, userId, boardId, id);
+    public String updateComment(@ModelAttribute Comment comment, HttpServletRequest request, @PathVariable Long id) {
+        commentService.updateComment(comment, id);
 
         return "redirect:" + request.getHeader("Referer");
     }

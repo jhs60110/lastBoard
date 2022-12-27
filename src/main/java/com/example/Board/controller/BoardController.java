@@ -3,8 +3,6 @@ package com.example.Board.controller;
 import com.example.Board.service.*;
 import com.example.Board.config.PrincipalDetails;
 import com.example.Board.entity.Board;
-import com.example.Board.entity.BoardFile;
-import com.example.Board.entity.Comment;
 import com.example.Board.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class BoardController {
         boardService.saveBoard(board);
 
         if (boardFile != null) {
-            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
+            boardFileService.saveBoardFile(fileHandler.userFileUpload(boardFile), board);
         }
 
         return "redirect:/";
@@ -71,11 +70,11 @@ public class BoardController {
     }
 
     @PutMapping("/update")
-    public String updateBoard(@ModelAttribute Board board, Authentication authentication, @RequestParam("boardId") String boardId, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException{
-        User userId = userService.findUserId(authentication);
-        boardService.updateBoard(board, boardId, userId);
+    public String updateBoard(@ModelAttribute Board board, @RequestPart(value = "files", required = false) List<MultipartFile> boardFile) throws IOException{
+        boardService.updateBoard(board);
+
         if (boardFile != null) {
-            boardFileService.saveBoardFile(fileHandler.UserFileUpload(boardFile), board);
+            boardFileService.saveBoardFile(fileHandler.userFileUpload(boardFile), board);
         }
 
         return "redirect:/";

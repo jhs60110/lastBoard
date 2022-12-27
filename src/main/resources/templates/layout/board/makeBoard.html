@@ -15,18 +15,18 @@
                 <form method="POST" action="/boards" th:object="${board}" enctype="multipart/form-data">
                     <div class="mb-2">
                         <label for="boardTitle" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="boardTitle" name="title" placeholder="제목을 입력하세요">
+                        <input type="text" class="form-control" id="boardTitle" name="title" placeholder="제목을 입력하세요"  maxlength="30">
                     </div>
                     <div class="mb-2 row">
                         <label class="col-sm-1 col-form-label">작성자:</label>
                         <div class="col-sm-2">
                             <span type="text" readonly class="form-control-plaintext align-middle"
-                               sec:authentication="name" ></span>
-                            <input  hidden name="user" th:value="${user.id}">
+                                  sec:authentication="name"></span>
+                            <input hidden name="user" th:value="${user.id}">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <textarea class="summernote" id="summernote" name="content"></textarea>
+                        <textarea class="summernote" id="summernote" name="content"  maxlength="600"></textarea>
                     </div>
                     <div class="mb-2">
                         <input class="form-control" type="file" id="formFile" name="files" multiple>

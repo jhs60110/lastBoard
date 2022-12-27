@@ -13,16 +13,12 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public void saveComment(Comment comment, User userId, Board commentBoardId) {
-        comment.setUser(userId);
-        comment.setBoard(commentBoardId);
+    public void saveComment(Comment comment) {
         commentRepository.save(comment);
     }
 
-    public void updateComment(Comment comment, User userId, Board boardId, Long id) {
+    public void updateComment(Comment comment,  Long id) {
         comment.setId(id);
-        comment.setUser(userId);
-        comment.setBoard(boardId);
         commentRepository.save(comment);
     }
 

@@ -25,11 +25,11 @@
                     <div class="card-header mb-2">첨부파일</div>
                     <div class="card-body d-inline-flex p-2 bd-highlight">
                         <div class="list-group" th:each="boardFiles : ${boardInfo.boardFiles}">
-                            <div th:id="'rid' + ${boardFiles.id} " class="me-2" >
+                            <div th:id="'rid' + ${boardFiles.id} " class="me-2">
                                 <input type="hidden" th:value="${boardFiles.id}" th:name="boardFileId" th:id="boardFile.id">
                                 <button class="btn btn-secondary" th:text="${boardFiles.getOriginalFileName()}"
-                                         th:onclick="'location.href=\'' + @{/files/download/{id}(id = ${boardFiles.id})} + '\''"
-                                 ></button>
+                                        th:onclick="'location.href=\'' + @{/files/download/{id}(id = ${boardFiles.id})} + '\''"
+                                ></button>
                             </div>
                         </div>
                     </div>
@@ -40,14 +40,13 @@
                     <i class="fa fa-comment fa"></i> 댓글작성하기
                 </div>
                 <div class="card-body">
-                    <ul class="list-group ">
+                    <ul class="list-group">
                         <li class="list-group-item mb-2">
-                            <form method="POST" action="/comments">
-                                <input type="hidden" name="boardId" class="form-control"
-                                       id="boardId"
-                                       th:value="${boardInfo.id}">
+                            <form method="POST" action="/comments" th:object="${comment}">
+                                <input type="hidden" name="board" class="form-control" th:value="${boardInfo.id}">
+                                <input type="hidden" name="user" th:value="${principalDetails.user.id}"/>
                                 <textarea class="form-control mb-2" id="exampleFormControlTextarea1"
-                                          placeholder="댓글을 입력하세요" name="content" rows="1"></textarea>
+                                          placeholder="댓글을 입력하세요" name="content" rows="1" maxlength="100"></textarea>
                                 <button type="submit" class="btn btn-primary">등록</button>
                             </form>
                         </li>
@@ -66,40 +65,43 @@
                                 <form method="post" th:action="@{/comments/{id}(id = ${comments.id})}">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <button class="badge btn-danger me-2" id="deleteComment"
-                                            th:if="${principalDetails.getUser().getUserId() == comments.user.userId or principalDetails.getUser.getRole()=='ROLE_ADMIN'}">
+                                            th:if="${principalDetails.getUser().getUserId() == comments.user.userId or
+                                            principalDetails.getUser.getRole()=='ROLE_ADMIN'}">
                                         삭제
                                     </button>
                                 </form>
                             </div>
                         </li>
-                        <form method="post" th:action="@{/comments/{id}(id = ${comments.id})}">
+
+                        <form method="post" th:action="@{/comments/{id}(id = ${comments.id})}" th:object="${comment}">
                             <input type="hidden" name="_method" value="PUT"/>
-                            <input type="hidden" name="boardId" class="form-control" th:value="${boardInfo.id}">
-                            <input type="hidden" name="commentUserName" th:value="${comments.user.userName}"/>
+                            <input type="hidden" name="board" class="form-control" th:value="${boardInfo.id}">
+                            <input type="hidden" name="user" th:value="${comments.user.id}"/>
                             <div class="collapse" th:id="'collapsePad'+${comments.id}">
                                 <div class="well">
-                                    <textarea class="form-control mb-2" placeholder="댓글을 수정하세요" name="content"></textarea>
+                                    <textarea class="form-control mb-2" placeholder="댓글을 수정하세요"
+                                              name="content"  maxlength="100"></textarea>
                                 </div>
-                                <button class="btn btn-primary" >수정</button>
+                                <button class="btn btn-primary">수정</button>
                             </div>
                         </form>
                     </ul>
                 </div>
             </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" sec:authorize="isAuthenticated()"
-                            th:if="${principalDetails.getUser().getUserId() == boardInfo.user.userId}"
-                            th:onclick="'location.href=\''+ @{/boards/update/{id}(id = ${boardInfo.id})} + '\''">
-                        수정
-                    </button>
-                    <button id="deleteBoard" class="btn btn-danger"
-                            th:if="${principalDetails.getUser().getUserId() == boardInfo.user.userId
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary" sec:authorize="isAuthenticated()"
+                        th:if="${principalDetails.getUser().getUserId() == boardInfo.user.userId}"
+                        th:onclick="'location.href=\''+ @{/boards/update/{id}(id = ${boardInfo.id})} + '\''">
+                    수정
+                </button>
+                <button id="deleteBoard" class="btn btn-danger"
+                        th:if="${principalDetails.getUser().getUserId() == boardInfo.user.userId
                                 or principalDetails.getUser.getRole()=='ROLE_ADMIN'}"
-                            onclick="deleteBoard()">
-                        삭제
-                    </button>
-                </div>
+                        onclick="deleteBoard()">
+                    삭제
+                </button>
+            </div>
 
         </div>
         </div>

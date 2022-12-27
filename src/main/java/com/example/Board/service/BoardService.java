@@ -14,15 +14,12 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final CommentRepository commentRepository;
 
     public void saveBoard(Board board) {
         boardRepository.save(board);
     }
 
-    public void updateBoard(Board board, String boardId, User userId) {
-        board.setUser(userId);
-        board.setId(Long.valueOf(boardId));
+    public void updateBoard(Board board) {
         boardRepository.save(board);
     }
 
